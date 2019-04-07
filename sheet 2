@@ -1,0 +1,271 @@
+//first method summary
+//hint: i've made the class same as given in the question LinkedListNode
+// public class
+public class LinkedListNode {
+		int value;
+		LinkedListNode next;
+
+
+		public int getValue(LinkedListNode node) {
+			return node.value;
+		}
+		public LinkedListNode getNext(LinkedListNode node) {
+			return node.next;
+		}
+	}
+  
+  //method one1- summary method
+  public static double[] summary (LinkedListNode head) {
+		double[] answer = new double[5];
+		LinkedListNode current = head;
+		if(current == null || current.next == null) {
+			return head;
+		}else {
+		int i=0;
+		answer[3] = current.value;
+		answer[4] = current.value;
+		while(current != null) {
+			answer[0] += current.value;
+			if(current.value > answer[3]) {
+				answer[3] = current.value;
+			}else if(current.value < answer[4]) {
+				answer[4] = current.value;
+			}
+			i++;
+			current = current.next;
+		}
+
+		answer[1] = answer[0] / (double)i;
+		current = head.next;
+		int medi=0;
+		if(i%2 == 0) {
+			while(current != null) {
+				if(medi == (i/2)-1) {
+					answer[2] = current.value;
+					current = current.next;
+					answer[2] += current.value;
+					answer[2] = answer[2] / 2.0;
+					break;
+				}
+				current = current.next;
+				medi++;
+			}
+		}else {
+			while(current != null) {
+				if(medi == (i/2)) {
+					answer[2] = current.value;
+					break;
+				}
+				current = current.next;
+				medi++;
+			}
+		}
+
+		return answer;
+	  }
+	}
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  //second method (reverse)
+  public static LinkedListNode reverse(LinkedListNode head) {
+		LinkedListNode temp = head;
+		LinkedListNode previous = null;
+		LinkedListNode next;
+		while(temp != null) {
+			next = temp.next;
+			temp.next = previous;
+			previous = temp;
+			temp = next;
+		}
+		head = previous;
+		return head;
+	}
+  
+  // method 3 (EVENINDEXELEMENT)
+  public static LinkedListNode evenIndexedElements(LinkedListNode head) {
+		LinkedListNode answer;
+		LinkedListNode evenlist;
+		answer = head;
+		evenlist=answer;
+
+		int i=1;
+		while(head.next != null) {
+			head = head.next;
+			if((i%2) == 0) 3{
+				answer.next = head;
+				answer = answer.next;
+			}
+			i++;
+		}
+		answer.next = null;
+		return evenlist;
+	}
+  
+  //method 4 (INSERTION SORT METHOD)
+  public static LinkedListNode insertionSort(LinkedListNode head) {
+		if(head == null || head.next == null) {
+		       return head;
+		}
+		LinkedListNode temp = head;
+		LinkedListNode pivot = temp;
+		head =head.next;
+
+		 while(head != null) {
+			 pivot =temp;
+			 while(pivot != head) {
+				 if(pivot.value > head.value) {
+					 int current = head.value;
+					 head.value=pivot.value;
+					 pivot.value=current;
+				 }else {
+					 pivot = pivot.next;
+				 }
+			 }
+			 head = head.next;
+		 }
+		 return temp;
+	}
+  
+  //method 5 (MERGE SORT METHOD )
+ public static LinkedListNode merge_Sort(LinkedListNode head) {
+			if(head == null || head.next == null) {
+			       return head;
+			}
+			LinkedListNode middle = getMiddle(head);
+			LinkedListNode left = head;
+			LinkedListNode right = middle.next;
+			middle.next = null;
+
+			return result(merge_Sort(left),merge_Sort(right));
+		}
+	public static LinkedListNode result(LinkedListNode l ,LinkedListNode r) {
+		LinkedListNode temp = new LinkedListNode();
+		LinkedListNode current;
+
+		for( current  = temp; l != null && r != null; current = current.next)
+		   {
+		       if(l.value <= r.value) 
+		       {
+			   current.next = l; 
+			   l = l.next; 
+		       }
+		       else
+			{ 
+			   current.next = r;
+			    r = r.next; 
+			}
+
+		    }
+		    current.next = (l == null) ? r :l;
+		    return temp.next;
+		}
+	public static LinkedListNode getMiddle(LinkedListNode head)
+		{
+		    if(head == null) 
+			return head;
+
+		    LinkedListNode temp1 = head, temp2 = head;
+
+		    while(temp2.next != null && temp2.next.next != null)
+		    {
+			temp1 = temp1.next;
+			temp2 = temp2.next.next;
+		    }
+		    return temp1;
+	}
+  
+  
+  
+  // method 6 (REMOVE CENTRAL NODE METHOD )
+  public static LinkedListNode removeCentralNode(LinkedListNode head) {
+		LinkedListNode current = head;
+		int i=0;
+		while(current!=null) {
+			i++;
+			current = current.next;
+		}
+		current =head;
+		int counter=0;
+		if(i == 2 ) {
+			return current.next;
+		}else if(i == 1) {
+			return current.next;
+		}
+		if(i%2 == 0) {
+			while(current!=null) {
+				if(counter == (i/2)-2) {
+					LinkedListNode x = current;
+					LinkedListNode y = x.next;
+					x.next = y.next;
+					break;
+				}
+				counter++;
+				current = current.next;
+			}
+		}else {
+			while(current!=null) {
+				if(counter == (i/2)-1) {
+					LinkedListNode x = current;
+					LinkedListNode y = x.next;
+					x.next = y.next;
+					break;
+				}
+				counter++;
+				current=current.next;
+			}
+		}
+		return head;
+	}
+  
+  
+  // method 7 (PALINDROME METHOD)
+  public static boolean palindrome(LinkedListNode head) {
+		LinkedListNode x=head;
+		LinkedListNode y=head;
+		LinkedListNode first;
+		while(true) {
+			x = x.next.next;
+			if(x.next == null) {
+				first = y.next.next;
+				break;
+			}
+			if(x==null) {
+				first =y.next;
+				break;
+			}
+			y = y.next;
+		}
+		y.next = null;
+		LinkedListNode reverseSecond = reverse(first);
+		while(reverseSecond !=null) {
+			if(reverseSecond.value != head.value) {
+				return false;
+			}
+			reverseSecond = reverseSecond.next;
+			head = head.next;
+		}
+		return true;
+	}
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  

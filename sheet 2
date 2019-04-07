@@ -99,7 +99,7 @@ public class LinkedListNode {
 		int i=1;
 		while(head.next != null) {
 			head = head.next;
-			if((i%2) == 0) 3{
+			if((i%2) == 0) {
 				answer.next = head;
 				answer = answer.next;
 			}
